@@ -1,1 +1,1 @@
-web: pm2 start src/bot.js
+web: npm start
