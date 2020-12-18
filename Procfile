@@ -1,1 +1,1 @@
-worker: pm2 start src/bot.js
+worker: npm run
