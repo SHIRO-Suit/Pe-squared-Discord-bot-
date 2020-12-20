@@ -75,15 +75,14 @@ module.exports = class VideosCommand extends BaseCommand {
         return (Time.getTime() - new Date().getTime());
       }
       //lance une premiere fois le code une fois l'heure indiquée en argument atteinte, elle est ensuite relancée recurcivement a la meme heure le lendemain.
-      await setTimeout(async function () { check() }, /*remaining()*/0);
+      await setTimeout(async function () { check() }, remaining());
 
       async function check() {
 
-        async function canRun(){
+    
           var file = await GetFile();
-          console.log(file.idchannel+" : "+ message.channel.id);
-          if(file.running && file.hour == args[0] && file.idchannel == message.channel.id){
-            check()}
+          if(!(file.running && file.hour == args[0] && file.idchannel == message.channel.id)){
+            return;
             
             // verifie si les valeurs n'ont pas changé avant de faire un rappel de la fonction.
             //si elles ont changé, cela veut dire que c'est appel n'a plus lieu et qu'il a juste
@@ -115,7 +114,7 @@ module.exports = class VideosCommand extends BaseCommand {
             var data = await fetchAsync(url);
           } catch (error) { // si le fichier n'est pas trouvé (pas de co, etc...)
             console.log("le fichier json est inaccessible");
-            await setTimeout(async function () { canRun() }, 1000 * 3600);
+            await setTimeout(async function () { check() }, 1000 * 3600);
             return;
           }
           if (!("error" in data)) {
@@ -129,12 +128,12 @@ module.exports = class VideosCommand extends BaseCommand {
             }
           } else { // si le fichier json contient une erreur (Quota atteint)
             console.log(data.error);
-            await setTimeout(async function () { canRun() }, 1000 * 3600);
+            await setTimeout(async function () { check() }, 1000 * 3600);
             return;
           }
         }
         if (videos.length == 0) {
-          await setTimeout(async function () { canRun() },/* remaining()*/10000);
+          await setTimeout(async function () { check() },remaining());
           console.log("pas de videos le " + new Date());
           return;
         }
@@ -159,7 +158,7 @@ module.exports = class VideosCommand extends BaseCommand {
         await message.channel.send(sayEmbed);
         message.channel.send(liens);
         console.log("fin");
-        await setTimeout(async function () { canRun()}, /*remaining()*/5000);
+        await setTimeout(async function () { check()}, remaining());
 
       }
     }
