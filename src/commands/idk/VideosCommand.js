@@ -3,6 +3,25 @@ const fetch = require('node-fetch');
 let settings = { method: "Get" };
 const Discord = require('discord.js');
 const he = require('he');
+var fs = require('fs');
+var mysql = require('mysql');
+const { get } = require('http');
+
+var con = mysql.createConnection("mysql://p25tggy3yuum47z4:qobzrmi5bj6u35ib@f80b6byii2vwv8cx.chr7pe7iynqr.eu-west-1.rds.amazonaws.com:3306/orb72zev1k83i9im");
+
+function GetFile(){
+  return new Promise(function(resolve,reject){
+  con.query("select filestring from commandsettings where id = 1", function(err,result){  
+    if (err) {
+      reject(err);
+    }else{resolve(JSON.parse(result[0].filestring));}
+  })
+});
+}
+function SetFile(file){
+  con.query("update commandsettings set filestring = '"+file+"' where id = 1",function(err,result){})
+}
+
 
 
 async function fetchAsync(urlstring) {
@@ -25,10 +44,22 @@ module.exports = class VideosCommand extends BaseCommand {
   }
 
   async run(client, message, args) {
+  
+
+    
+
     if (message.author != "256838525750738946"){console.log("un utilisateur non authentifié a utilisé cette commande"); return;}
+    
+  
+    var file =  await GetFile();
     if (args[0] === undefined || !Number.isInteger(parseInt(args[0])) || args[0] > 23) {
       message.channel.send("Erreur : vous devez specifier une horaire. Ex:  ²videos 14");
-    } else {
+    } else if(file.running){
+      message.channel.send("la commande a déjà été lancée sur le serveur, si vous voulez la relancer dans un autre salon ou a une autre horaire faites d’abord la commande ²stop");
+    } 
+    else{
+      SetFile('{"idchannel" : '+message.channel.id+' , "hour" : ' +args[0] +', "running" : true}');
+      //fs.writeFile("test.json", JSON.stringify(file), function(){});
       message.channel.send("Le bot est parametré pour executer la commande tout les jours a " + parseInt(args[0]) + "h");
       let videos = new Array;
 
@@ -44,9 +75,20 @@ module.exports = class VideosCommand extends BaseCommand {
         return (Time.getTime() - new Date().getTime());
       }
       //lance une premiere fois le code une fois l'heure indiquée en argument atteinte, elle est ensuite relancée recurcivement a la meme heure le lendemain.
-      await setTimeout(async function () { check() }, remaining());
+      await setTimeout(async function () { check() }, /*remaining()*/0);
 
       async function check() {
+
+        async function canRun(){
+          var file = await GetFile();
+          console.log(file.idchannel+" : "+ message.channel.id);
+          if(file.running && file.hour == args[0] && file.idchannel == message.channel.id){
+            check()}
+            
+            // verifie si les valeurs n'ont pas changé avant de faire un rappel de la fonction.
+            //si elles ont changé, cela veut dire que c'est appel n'a plus lieu et qu'il a juste
+            //été gardé a cause du setTimeout qui n'etais pas terminé
+        } 
 
         var today = new Date();
         var tommorow = today;
@@ -73,7 +115,7 @@ module.exports = class VideosCommand extends BaseCommand {
             var data = await fetchAsync(url);
           } catch (error) { // si le fichier n'est pas trouvé (pas de co, etc...)
             console.log("le fichier json est inaccessible");
-            await setTimeout(async function () { check() }, 1000 * 3600);
+            await setTimeout(async function () { canRun() }, 1000 * 3600);
             return;
           }
           if (!("error" in data)) {
@@ -87,12 +129,12 @@ module.exports = class VideosCommand extends BaseCommand {
             }
           } else { // si le fichier json contient une erreur (Quota atteint)
             console.log(data.error);
-            await setTimeout(async function () { check() }, 1000 * 3600);
+            await setTimeout(async function () { canRun() }, 1000 * 3600);
             return;
           }
         }
         if (videos.length == 0) {
-          await setTimeout(async function () { check() }, remaining());
+          await setTimeout(async function () { canRun() },/* remaining()*/10000);
           console.log("pas de videos le " + new Date());
           return;
         }
@@ -116,10 +158,11 @@ module.exports = class VideosCommand extends BaseCommand {
         })
         await message.channel.send(sayEmbed);
         message.channel.send(liens);
-        console.log("fin" );
-        await setTimeout(async function () { check() }, remaining());
+        console.log("fin");
+        await setTimeout(async function () { canRun()}, /*remaining()*/5000);
 
       }
     }
+    
   }
 }
