@@ -73,8 +73,8 @@ module.exports = class ReadyEvent extends BaseEvent {
           DelayedMessage(remaining());
         }
       }else {
-        console.log("OnReady: CommandCycle.Status = running , CommandCycle.Time = " + file.hour);
-        DelayedMessage(15000); //R
+        console.log("OnReady: CommandCycle.Status = running  CommandCycle.Time = " + file.hour);
+        DelayedMessage(remaining()); //R
       }
       async function DelayedMessage(duration) {
         file.running = true;
@@ -130,7 +130,7 @@ module.exports = class ReadyEvent extends BaseEvent {
           /////////// VERIFICATION ERREURS ///////////
 
           try {
-            var data = await fetchAsync(url3); // throw une exception si erreur de connexion.
+            var data = await fetchAsync(url2); // throw une exception si erreur de connexion.
             if (("error" in data)) { throw 'Erreur de Quota ou Autre' }
 
             /////////// VIDEOS FILTREES DANS UN TABLEAU  /////////
@@ -146,7 +146,7 @@ module.exports = class ReadyEvent extends BaseEvent {
             console.log(err);
             file.err += 1;
             await UpdateFile(file);
-            DelayedMessage(3600);
+            DelayedMessage(3600000);
             return;
           }
 

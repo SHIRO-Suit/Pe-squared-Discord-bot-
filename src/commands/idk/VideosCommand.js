@@ -64,7 +64,7 @@ module.exports = class VideosCommand extends BaseCommand {
     
 
     message.channel.send("Heure commande journalière : " + file.hour + "h\nPour l'annuler entrez ²stop");
-    console.log("OnCommand: CommandCycle.Status = running , CommandCycle.Time = " + file.hour);
+    console.log("OnCommand: CommandCycle.Status = running  CommandCycle.Time = " + file.hour);
     let videos = new Array;
 
     ///////// FONCTIONS INTERNES /////////
@@ -94,7 +94,7 @@ module.exports = class VideosCommand extends BaseCommand {
     }
     //////// REEL LANCEMENT DE LA FONCTION  //////////
 
-    DelayedMessage(0); // R
+    DelayedMessage(remaining()); // R
     async function check() {
 
       var file = await GetFile();
@@ -149,7 +149,7 @@ module.exports = class VideosCommand extends BaseCommand {
         /////////// VERIFICATION ERREURS ///////////
 
         try {
-          var data = await fetchAsync(url3); // throw une exception si erreur de connexion.
+          var data = await fetchAsync(url2); // throw une exception si erreur de connexion.
           if (("error" in data)) { throw 'Erreur de Quota ou Autre' }
           
           /////////// VIDEOS FILTREES DANS UN TABLEAU  /////////
@@ -165,7 +165,7 @@ module.exports = class VideosCommand extends BaseCommand {
           console.log(err);
           file.err += 1;
           await UpdateFile(file);
-          DelayedMessage(3600);
+          DelayedMessage(3600000);
           return;
         }
         
