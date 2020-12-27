@@ -1,5 +1,4 @@
 const BaseCommand = require('../../utils/structures/BaseCommand');
-var fs = require('fs');
 var mysql = require('mysql');
 
 var con = mysql.createConnection("mysql://p25tggy3yuum47z4:qobzrmi5bj6u35ib@f80b6byii2vwv8cx.chr7pe7iynqr.eu-west-1.rds.amazonaws.com:3306/orb72zev1k83i9im");
@@ -27,6 +26,7 @@ module.exports = class StopCommand extends BaseCommand {
    
     var file = await GetFile();
     file.running = false;
+    file.err = 0;
     SetFile(JSON.stringify(file));
     message.channel.send("L'activation journaliere de la commande à bien été desactivée");
 

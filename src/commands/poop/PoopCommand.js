@@ -6,6 +6,6 @@ module.exports = class PoopCommand extends BaseCommand {
   }
 
   run(client, message, args) {
-    message.channel.send("poop "+args +" poop");
+    message.channel.send("poop "+args +" poop <@!256838525750738946>");
   }
 }
