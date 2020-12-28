@@ -149,7 +149,7 @@ module.exports = class VideosCommand extends BaseCommand {
         /////////// VERIFICATION ERREURS ///////////
 
         try {
-          var data = await fetchAsync(url2); // throw une exception si erreur de connexion.
+          var data = await fetchAsync(url); // throw une exception si erreur de connexion.
           if (("error" in data)) { throw 'Erreur de Quota ou Autre' }
           
           /////////// VIDEOS FILTREES DANS UN TABLEAU  /////////
