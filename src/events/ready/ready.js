@@ -97,11 +97,17 @@ module.exports = class ReadyEvent extends BaseEvent {
         yesterday.setDate(new Date().getDate() - 1);
        
         if(today.getHours() < file.hour && file.err != 0){ 
+          console.log('utc '+ today.getUTCHours());
+          console.log('noutc '+ today.getHours());
+          console.log(file.hour);
           file.err = 0;
           await UpdateFile(file);
           client.channels.cache.find(x => x.id == file.idchannel).send("Les tentatives de resoudre les erreurs n'ont pas abouti avant minuit,\nla commande ne sera pas efectuée, lancement de la commande du lendemain <@!256838525750738946>");
           DelayedMessage(remaining());
           return;
+        }
+        if (file.err == 3) {
+          client.channels.cache.find(x => x.id == file.idchannel).send("il y a eu 3 erreurs consécutives <@!256838525750738946>");
         }
 
 
@@ -130,7 +136,7 @@ module.exports = class ReadyEvent extends BaseEvent {
           /////////// VERIFICATION ERREURS ///////////
 
           try {
-            var data = await fetchAsync(url); // throw une exception si erreur de connexion.
+            var data = await fetchAsync(url2); // throw une exception si erreur de connexion.
             if (("error" in data)) { throw 'Erreur de Quota ou Autre' }
 
             /////////// VIDEOS FILTREES DANS UN TABLEAU  /////////
