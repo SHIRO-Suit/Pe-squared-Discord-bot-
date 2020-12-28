@@ -19,7 +19,7 @@ function GetFile() {
   })
 }
 function UpdateFile(file) {
-  con.query("update commandsettings set filestring = '" + JSON.stringify(file) + "' where id = 1", function (err, result) { })
+  con.query("update commandsettings set filestring = '" + JSON.stringify(file) + "' where id = 1", function (err, result) {if(err)console.log("chiasse") });
 }
 function agestring(age) {
   var agestring = "il y a " + age + " An";
@@ -76,7 +76,7 @@ module.exports = class ReadyEvent extends BaseEvent {
         console.log("OnReady: CommandCycle.Status = running  CommandCycle.Time = " + file.hour);
         DelayedMessage(remaining()); //R
       }
-      async function DelayedMessage(duration) {
+      async function DelayedMessage(duration) {        
         file.running = true;
         await UpdateFile(file);
         clearTimeout(GlobalVars.GlobalTimer);
@@ -85,7 +85,7 @@ module.exports = class ReadyEvent extends BaseEvent {
 
       async function check() {
 
-        var file = await GetFile();
+         file = await GetFile();
  
 
 
@@ -136,7 +136,7 @@ module.exports = class ReadyEvent extends BaseEvent {
           /////////// VERIFICATION ERREURS ///////////
 
           try {
-            var data = await fetchAsync(url2); // throw une exception si erreur de connexion.
+            var data = await fetchAsync(url); // throw une exception si erreur de connexion.
             if (("error" in data)) { throw 'Erreur de Quota ou Autre' }
 
             /////////// VIDEOS FILTREES DANS UN TABLEAU  /////////
@@ -152,11 +152,12 @@ module.exports = class ReadyEvent extends BaseEvent {
             console.log(err);
             file.err += 1;
             await UpdateFile(file);
-            DelayedMessage(3600000);
+            await DelayedMessage(3600000);
             return;
           }
 
         }
+        console.log('code éxécuté, pas derreur');
         file.err = 0;
         await UpdateFile(file);
         if (videos.length == 0) {

@@ -97,7 +97,7 @@ module.exports = class VideosCommand extends BaseCommand {
     DelayedMessage(remaining()); // R
     async function check() {
 
-      var file = await GetFile();
+     file = await GetFile();
       // if (!(file.running && file.hour == args[0] && file.idchannel == message.channel.id)) {
       //   return;
       // } // vérifie si la commande n'est pas obsolète 
