@@ -54,7 +54,7 @@ module.exports = class ReadyEvent extends BaseEvent {
       function remaining() {
         let Time = new Date();
         let HourNow = Time.getHours();
-        Time.setUTCHours(file.hour, 0, 0);
+        Time.setUTCHours(file.hour -1, 0, 0);
         if (HourNow >= file.hour ) {
           Time.setDate(new Date().getDate() + 1);
         }

@@ -73,7 +73,7 @@ module.exports = class VideosCommand extends BaseCommand {
       let result = 0;
       let Time = new Date();
       let HourNow = Time.getHours();
-      Time.setUTCHours(file.hour, 0, 0);
+      Time.setUTCHours(file.hour-1, 0, 0);
       if (HourNow >= file.hour ) {
         if (!(HourNow == file.hour && !file.running)){
           Time.setDate(new Date().getDate() + 1);
