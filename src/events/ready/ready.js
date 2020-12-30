@@ -55,7 +55,7 @@ module.exports = class ReadyEvent extends BaseEvent {
         let Time = new Date();
         let HourNow = Time.getHours();
         Time.setUTCHours(file.hour -1, 0, 0);
-        if (HourNow >= file.hour ) {
+        if (HourNow >= file.hour -1) {
           Time.setDate(new Date().getDate() + 1);
         }
         let result = Time.getTime() - (new Date().getTime() - new Date().getTimezoneOffset()*60000);
