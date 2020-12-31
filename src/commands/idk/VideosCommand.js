@@ -142,7 +142,7 @@ module.exports = class VideosCommand extends BaseCommand {
           + "&channelId=UCRzYFQvpcyLj0EhL5JQOGfQ"
           + "&fields=items(snippet(publishedAt,title),id(videoId))"
           + "&publishedBefore=" + yearT + "-11-01T00:00:00Z"
-          + "&publishedAfter=" + yearY + "-10-30T23:59:59Z"
+          + "&publishedAfter=" + YearY + "-10-30T23:59:59Z"
           + "&maxResults=25";
         //url pour avoir acces au json en hebergant sur xampp (le developpement utilise rapidement le quota de l'API, fetch() demande du http)
         var url2 = "http://file.local/search.json";
