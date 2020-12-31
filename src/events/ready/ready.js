@@ -112,8 +112,9 @@ module.exports = class ReadyEvent extends BaseEvent {
 
 
         // le for fais une demande API a la date actuelle tout les ans de maintenant a la creation de la chaine pour trouver tout les anniversaires.
-        for (var year = today.getUTCFullYear() - 1; year >= 2016; year--) {
-
+        for (var i = today.getUTCFullYear() - 2016; i >= 0; i--) {
+          yearT = tommorow.getUTCFullYear() - i;
+          YearY = yesterday.getUTCFullYear() - i;
           let url = "https://www.googleapis.com/youtube/v3/search?part=snippet"
             + "&key=AIzaSyBz7c52lt1mbJmNgOMpNol9x4GWWHGcgqU"
             + "&type=video"
