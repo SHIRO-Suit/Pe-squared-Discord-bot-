@@ -120,8 +120,8 @@ module.exports = class ReadyEvent extends BaseEvent {
             + "&type=video"
             + "&channelId=UCRzYFQvpcyLj0EhL5JQOGfQ"
             + "&fields=items(snippet(publishedAt,title),id(videoId))"
-            + "&publishedBefore=" + year + "-" + (tommorow.getUTCMonth() + 1) + "-" + tommorow.getUTCDate() + "T00:00:00Z"
-            + "&publishedAfter=" + year + "-" + (yesterday.getUTCMonth() + 1) + "-" + yesterday.getUTCDate() + "T23:59:59Z"
+            + "&publishedBefore=" + yearT + "-" + (tommorow.getUTCMonth() + 1) + "-" + tommorow.getUTCDate() + "T00:00:00Z"
+            + "&publishedAfter=" + YearY + "-" + (yesterday.getUTCMonth() + 1) + "-" + yesterday.getUTCDate() + "T23:59:59Z"
             + "&maxResults=25";
           let url3 = "https://www.googleapis.com/youtube/v3/search?part=snippet"
             + "&key=AIzaSyBz7c52lt1mbJmNgOMpNol9x4GWWHGcgqU"
