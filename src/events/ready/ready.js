@@ -128,8 +128,8 @@ module.exports = class ReadyEvent extends BaseEvent {
             + "&type=video"
             + "&channelId=UCRzYFQvpcyLj0EhL5JQOGfQ"
             + "&fields=items(snippet(publishedAt,title),id(videoId))"
-            + "&publishedBefore=" + year + "-11-01T00:00:00Z"
-            + "&publishedAfter=" + year + "-10-30T23:59:59Z"
+            + "&publishedBefore=" + yearT + "-11-01T00:00:00Z"
+            + "&publishedAfter=" + YearY + "-10-30T23:59:59Z"
             + "&maxResults=25";
 
           //url pour avoir acces au json en hebergant sur xampp (le developpement utilise rapidement le quota de l'API, fetch() demande du http)
