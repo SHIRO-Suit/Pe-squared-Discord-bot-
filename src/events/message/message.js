@@ -10,7 +10,8 @@ var QuestionSentenceList = new Array("comment",
                                      "eske",
                                      "est ce",
                                      "pourquoi",
-                                     "est-ce");
+                                     "est-ce",
+                                     "qui");
 
 module.exports = class MessageEvent extends BaseEvent {
   constructor() {
@@ -29,11 +30,14 @@ module.exports = class MessageEvent extends BaseEvent {
         command.run(client, message, cmdArgs);
       }
     }else{
-      var contentstring =  message.content.toLowerCase();
       if(!GlobalVars.IsChiant) return;
+      if(message.content.includes("http") || message.attachments.size >0) return;
+      var contentstring =  message.content.toLowerCase();
+
       var isquestion = false;
       QuestionSentenceList.forEach(element => {
-        if (contentstring.startsWith(element)) isquestion = true;
+        if (contentstring.startsWith(element)|| contentstring.endsWith(element)) isquestion = true;
+
       });
     
         switch(message.content[message.content.length -1]){
@@ -41,9 +45,9 @@ module.exports = class MessageEvent extends BaseEvent {
           case '!' : break;
           case '?' : break;
           default : if(isquestion){
-            message.channel.send('?');
+            message.channel.send(message.content + '? <@!' + message.author + '>');
           }else{
-            message.channel.send('.');
+            message.channel.send(message.content + '. <@!'+ message.author + '>');
           } 
         
       }
