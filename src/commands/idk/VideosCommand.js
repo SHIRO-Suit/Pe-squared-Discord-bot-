@@ -125,7 +125,7 @@ module.exports = class VideosCommand extends BaseCommand {
 
 
       // le for fais une demande API a la date actuelle tout les ans de maintenant a la creation de la chaine pour trouver tout les anniversaires.
-      for (var i = today.getUTCFullYear() - 2016; i >= 0; i--) {
+      for (var i = today.getUTCFullYear() - 2016; i > 0; i--) {
         var yearT = tommorow.getUTCFullYear() - i;
         var YearY = yesterday.getUTCFullYear() - i;
         let url = "https://www.googleapis.com/youtube/v3/search?part=snippet"
