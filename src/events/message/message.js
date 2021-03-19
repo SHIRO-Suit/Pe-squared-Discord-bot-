@@ -44,6 +44,9 @@ module.exports = class MessageEvent extends BaseEvent {
           case '.' : break;
           case '!' : break;
           case '?' : break;
+          case ';' : break;
+          case ':' : break;
+          case ',' : break;
           default : if(isquestion){
             message.channel.send(message.content + '? <@!' + message.author + '>');
           }else{
