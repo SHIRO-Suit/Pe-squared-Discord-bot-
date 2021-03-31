@@ -1,5 +1,5 @@
 require('dotenv').config();
-import('../commandsReg');
+import('../commandsReg.js');
 const { Client } = require('discord.js');
 const { registerCommands, registerEvents } = require('./utils/registry');
 const client = new Client();
