@@ -4,10 +4,7 @@ const { Client } = require('discord.js');
 const { registerCommands, registerEvents } = require('./utils/registry');
 const client = new Client();
 
-client.api.applications('785217364769636362').guilds('304660884482162688').commands.post({data: {
-  name: 'ping',
-  description: 'ping pong!'
-}});
+
 (async () => {
   client.commands = new Map();
   client.events = new Map();
@@ -15,5 +12,9 @@ client.api.applications('785217364769636362').guilds('304660884482162688').comma
   await registerCommands(client, '../commands');
   await registerEvents(client, '../events');
   await client.login(process.env.DISCORD_BOT_TOKEN);
+  await client.api.applications('785217364769636362').guilds('304660884482162688').commands.post({data: {
+    name: 'ping',
+    description: 'ping pong!'
+  }});
 })();
 
