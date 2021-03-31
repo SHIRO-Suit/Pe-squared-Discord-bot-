@@ -1,5 +1,4 @@
 const fetch = require('node-fetch');
-const BaseCommand = require('src/utils/structures/BaseCommand');
 const Discord = require('discord.js');
 const botToken = 'Nzg1MjE3MzY0NzY5NjM2MzYy.X80oqA.y146FnMh-WoR-pvcncFSnXt6Uf8';
 
@@ -27,10 +26,7 @@ r = fetch(url,{
       'Content-Type': 'application/json'
     }
 });
-client.api.applications(client.user.id).guilds('304660884482162688').commands.post({data: {
-    name: 'ping',
-    description: 'ping pong!'
-}});
+
 setTimeout(function(){
     console.log(r);
 },10000);
