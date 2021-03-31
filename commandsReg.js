@@ -16,5 +16,5 @@ headers = {
 // headers = {
 //     "Authorization": "Bearer abcdefg"
 // }
-r = fetch(url,headers=headers,json=json);
+r = await fetch(url,headers=headers,json=json);
 console.log(r);
