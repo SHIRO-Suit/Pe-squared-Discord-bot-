@@ -17,4 +17,4 @@ headers = {
 //     "Authorization": "Bearer abcdefg"
 // }
 r = fetch(url,headers=headers,json=json);
-console.log("ce code est executé");
+console.log(r);
