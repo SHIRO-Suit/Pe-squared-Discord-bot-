@@ -3,7 +3,8 @@ require('dotenv').config();
 const { Client } = require('discord.js');
 const { registerCommands, registerEvents } = require('./utils/registry');
 const client = new Client();
-client.api.applications(client.user.id).guilds('304660884482162688').commands.post({data: {
+
+client.api.applications('785217364769636362').guilds('304660884482162688').commands.post({data: {
   name: 'ping',
   description: 'ping pong!'
 }});
