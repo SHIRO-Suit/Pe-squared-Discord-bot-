@@ -7,13 +7,14 @@ json = {
     "description": "Teste le slash"
 }
 
-// // For authorization, you can use either your bot token
-// headers = {
-//     "Authorization": "Bot 123456"
-// }
+// For authorization, you can use either your bot token
+headers = {
+    "Authorization": "Bot Nzg1MjE3MzY0NzY5NjM2MzYy.X80oqA.y146FnMh-WoR-pvcncFSnXt6Uf8",
+    'Content-Type': 'application/json'
+}
 // // or a client credentials token for your app with the applications.commands.update scope
 // headers = {
 //     "Authorization": "Bearer abcdefg"
 // }
-r = fetch(url,json=json);
+r = fetch(url,headers=headers,json=json);
 console.log("ce code est executé");
