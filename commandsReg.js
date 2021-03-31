@@ -1,6 +1,6 @@
 const fetch = require('node-fetch');
 
-url = "https://discord.com/api/v8/applications/785217364769636362/guilds/304660884482162688/commands"
+url = "https://discord.com/api/v8/applications/785217364769636362/guilds/304660884482162688/commands";
 
 json = {
     "name": "Test Slash",
@@ -16,4 +16,4 @@ json = {
 //     "Authorization": "Bearer abcdefg"
 // }
 
-r = fetch(url)
+r = fetch(url,json=json);
