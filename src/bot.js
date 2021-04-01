@@ -21,7 +21,8 @@ module.exports = {client};
     description: 'Active/Désactive le mode chiant sur la correction de la ponctuation.'
   },data:{
     name: 'poop',
-    description: 'Encapsule avec poop'
+    description: 'Encapsule avec poop',
+    options:[]
   }
 });
   client.ws.on('INTERACTION_CREATE', async interaction => {
