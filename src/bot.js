@@ -2,8 +2,9 @@ require('dotenv').config();
 //import('../commandsReg.js');
 const { Client } = require('discord.js');
 const { registerCommands, registerEvents } = require('./utils/registry');
+const { commands } = require('../commandsChecker.js');
 const client = new Client();
-
+module.exports = {client};
 
 (async () => {
   client.commands = new Map();
@@ -15,6 +16,17 @@ const client = new Client();
   await client.api.applications('785217364769636362').guilds('304660884482162688').commands.post({data: {
     name: 'ping',
     description: 'ping pong!'
-  }});
+  },data:{
+    name: 'dotannoy',
+    description: 'Active/Désactive le mode chiant sur la correction de la ponctuation.'
+  },data:{
+    name: 'poop',
+    description: 'Encapsule avec poop'
+  }
+});
+  client.ws.on('INTERACTION_CREATE', async interaction => {
+    commands(interaction);
+  });
 })();
+
 
