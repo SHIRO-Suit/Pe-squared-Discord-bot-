@@ -22,7 +22,12 @@ module.exports = {client};
   },data:{
     name: 'poop',
     description: 'Encapsule avec poop',
-    options:[]
+    options:[{
+      name:'Phrase',
+      description : 'Phrase à encapsuler',
+      type: 3,
+      required: true
+    }]
   }
 });
   client.ws.on('INTERACTION_CREATE', async interaction => {
