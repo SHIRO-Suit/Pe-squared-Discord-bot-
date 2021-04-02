@@ -1,8 +1,8 @@
 require('dotenv').config();
 //import('../commandsReg.js');
-const { Client } = require('discord.js');
+const { Client, Message } = require('discord.js');
 const { registerCommands, registerEvents } = require('./utils/registry');
-const { commands } = require('../commandsChecker.js');
+const { commands, events } = require('../commandsChecker.js');
 const client = new Client();
 module.exports = {client};
 
@@ -35,4 +35,6 @@ module.exports = {client};
   });
 })();
 
-
+client.on('message', msg => {
+  events('message',msg);
+});
