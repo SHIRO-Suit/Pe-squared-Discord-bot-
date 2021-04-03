@@ -1,8 +1,8 @@
 require('dotenv').config();
 //import('../commandsReg.js');
-const { Client } = require('discord.js');
+const { Client,Message } = require('discord.js');
 const { registerCommands, registerEvents } = require('./utils/registry');
-const { commands } = require('../commandsChecker.js');
+const { commands, events } = require('../commandsChecker.js');
 const client = new Client();
 module.exports = {client};
 
@@ -22,12 +22,20 @@ module.exports = {client};
   },data:{
     name: 'poop',
     description: 'Encapsule avec poop',
-    options:[]
+    options:[{
+      name:'Phrase',
+      description : 'Phrase à encapsuler',
+      type: 3,
+      required: true
+    }]
   }
 });
   client.ws.on('INTERACTION_CREATE', async interaction => {
     commands(interaction);
   });
 })();
+client.on('message', msg => {
+  events('message',msg);
+});
 
 
