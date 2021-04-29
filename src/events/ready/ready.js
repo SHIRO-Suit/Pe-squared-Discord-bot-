@@ -41,7 +41,7 @@ module.exports = class ReadyEvent extends BaseEvent {
   
   async run(client) {
  
-
+    return;
     var file = await GetFile();
 
     if (!file.running) { return }

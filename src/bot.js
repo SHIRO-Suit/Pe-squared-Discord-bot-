@@ -21,13 +21,24 @@ module.exports = {client};
     description: 'Active/Désactive le mode chiant sur la correction de la ponctuation.'
   },data:{
     name: 'poop',
-    description: 'Encapsule avec poop',
+    description: 'Encapsule avec poop.',
     options:[{
       name:'Phrase',
       description : 'Phrase à encapsuler',
       type: 3,
       required: true
     }]
+  },data:{
+      name:'videobirthday',
+      description: 'Lance la fonction quotidienne d\'anniversaire de vidéo dans le salon actuel.',
+      options:[{
+          name:'heure',
+          description:'heure quotidienne de la commande (0-23)',
+          type : 4
+      }]
+  },data:{
+      name: 'updatevideos',
+      description: 'mets a jour la DB des vidéos'
   }
 });
   client.ws.on('INTERACTION_CREATE', async interaction => {
@@ -37,5 +48,8 @@ module.exports = {client};
 client.on('message', msg => {
   events('message',msg);
 });
+client.on('ready',()=>{
+    events('ready');
+})
 
 

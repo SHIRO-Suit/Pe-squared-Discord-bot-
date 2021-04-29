@@ -7,5 +7,7 @@ function ping(interaction){
         data: {
           content: 'pong'
         }
-      }})
-}
+      }});
+     
+      
+    }
