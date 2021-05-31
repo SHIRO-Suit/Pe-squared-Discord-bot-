@@ -69,7 +69,7 @@ async function updatevideos(interaction){
 
     }
 
-    var sqlquery= 'Delete from Videos; Insert into Videos values' + insertstring + ';Update Settings Set LastUpdate=\''+ new Date().toISOString()+'\';';
+    var sqlquery= 'Delete from Videos where VideoID != \'!#event\'; Insert into Videos values' + insertstring + ';Update Settings Set LastUpdate=\''+ new Date().toISOString()+'\';';
     const query = new Promise(resolve =>{ con.query(sqlquery,  (err, result) =>{
         if(err){  message = '🛑 erreur de connexion à la base de données. Reessayez plus tard.'; console.log(err);}
         if(result){ message = '✅ La base de données a été mise a jour ('+result[1].affectedRows+' lignes Ajoutées)';}

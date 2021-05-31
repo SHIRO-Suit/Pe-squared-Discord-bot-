@@ -39,6 +39,33 @@ module.exports = {client};
   },data:{
       name: 'updatevideos',
       description: 'mets a jour la DB des vidéos'
+  },data:{
+      name: 'addevent',
+      description: 'permet d\'ajouter un event',
+      options:[
+          {
+        name: 'année',
+        description:'année de l\'event (nombre)',
+        type: 4,
+        required : true
+          },{
+            name: 'mois',
+            description:'mois de l\'event (nombre)',
+            type: 4,
+            required: true
+          },{
+            name: 'jour',
+            description:'jour de l\'event (nombre)',
+            type: 4,
+            required: true
+          },{
+              name:'event',
+              description: 'Titre de l\'event',
+              type: 3,
+              required: true
+          }
+        ]
+
   }
 });
   client.ws.on('INTERACTION_CREATE', async interaction => {
