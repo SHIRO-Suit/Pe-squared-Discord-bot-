@@ -1,5 +1,5 @@
 module.exports={videobirthday};
-const { client } = require('../src/bot.js');
+const { client } = require('../bot.js');
 const {con} = require('../GlobalVars.js');
 
 async function videobirthday(interaction){

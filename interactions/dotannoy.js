@@ -1,6 +1,6 @@
 var GlobalVars = require('../GlobalVars');
 
-const { client } = require('../src/bot.js');
+const { client } = require('../bot.js');
 module.exports={dotannoy};
 function dotannoy(interaction){
     var message;

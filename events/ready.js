@@ -1,7 +1,7 @@
 module.exports = {ready};
 const Discord = require('discord.js');
 const {con} = require('../GlobalVars.js');
-const {client} = require("./../src/bot")
+const {client} = require("../bot")
 var Today = new Date(); //"2021-03-21T10:02:39Z" pour test
 var Timer;
 

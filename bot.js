@@ -1,7 +1,7 @@
 require('dotenv').config();
 const { Client } = require('discord.js');
-const { commands, events } = require('../commandsChecker.js');
-const json = require('../commandsFetchList.json');
+const { commands, events } = require('./commandsChecker.js');
+const json = require('./commandsFetchList.json');
 const client = new Client();
 module.exports = {client};
 

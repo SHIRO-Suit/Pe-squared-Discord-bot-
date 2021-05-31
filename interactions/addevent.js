@@ -1,5 +1,5 @@
 module.exports={addevent};
-const { client } = require('../src/bot.js');
+const { client } = require('../bot.js');
 const {con} = require('../GlobalVars.js');
 
 async function addevent(interaction){
@@ -20,8 +20,10 @@ async function addevent(interaction){
     }
 
 
-    
-    var insertstring = '(\'!#event\',\"'+ interaction.data.options[3].value+'\",\''+new Date(interaction.data.options[0].value,interaction.data.options[1].value-1,interaction.data.options[2].value).toISOString().substring(0,19)+'Z'+'\')';
+    var date = new Date(interaction.data.options[0].value,interaction.data.options[1].value-1,interaction.data.options[2].value)
+    var dateFix = new Date(date.getTime() + date.getTimezoneOffset()*60000)
+     
+    var insertstring = '(\'!#event\',\"'+ interaction.data.options[3].value+'\",\''+dateFix.toISOString().substring(0,19)+'Z'+'\')';
 
     
 

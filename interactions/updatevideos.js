@@ -1,5 +1,5 @@
 module.exports={updatevideos};
-const { client } = require('../src/bot.js');
+const { client } = require('../bot.js');
 const { default: fetch } = require('node-fetch');
 const he = require('he');
 const {con} = require('../GlobalVars.js');
