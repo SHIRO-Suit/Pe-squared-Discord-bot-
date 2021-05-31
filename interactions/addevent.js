@@ -18,14 +18,7 @@ async function addevent(interaction){
         endMessage();
         return;
     }
-
-
-    var date = new Date(interaction.data.options[0].value,interaction.data.options[1].value-1,interaction.data.options[2].value)
-    var dateFix = new Date(date.getTime() + date.getTimezoneOffset()*60000)
-     
-    var insertstring = '(\'!#event\',\"'+ interaction.data.options[3].value+'\",\''+dateFix.toISOString().substring(0,19)+'Z'+'\')';
-
-    
+    var insertstring = '(\'!#event\',\"'+ interaction.data.options[3].value+'\",\''+new Date(interaction.data.options[0].value,interaction.data.options[1].value-1,interaction.data.options[2].value,2).toISOString().substring(0,19)+'Z'+'\')';
 
     var sqlquery= 'Insert into Videos values' + insertstring + ';';
     const query = new Promise(resolve =>{ con.query(sqlquery,  (err, result) =>{
