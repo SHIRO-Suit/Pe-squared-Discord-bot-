@@ -1,9 +1,8 @@
 module.exports={updatevideos};
 const { client } = require('../src/bot.js');
-const mysql = require('mysql');
 const { default: fetch } = require('node-fetch');
 const he = require('he');
-const con = mysql.createConnection("mysql://p25tggy3yuum47z4:qobzrmi5bj6u35ib@f80b6byii2vwv8cx.chr7pe7iynqr.eu-west-1.rds.amazonaws.com:3306/orb72zev1k83i9im?multipleStatements=true");
+const {con} = require('../GlobalVars.js');
 
 async function updatevideos(interaction){
     var message;

@@ -1,7 +1,7 @@
 module.exports={videobirthday};
 const { client } = require('../src/bot.js');
-const mysql = require('mysql');
-const con = mysql.createConnection("mysql://p25tggy3yuum47z4:qobzrmi5bj6u35ib@f80b6byii2vwv8cx.chr7pe7iynqr.eu-west-1.rds.amazonaws.com:3306/orb72zev1k83i9im");
+const {con} = require('../GlobalVars.js');
+
 async function videobirthday(interaction){
     var message;
     if(interaction.data.options[0].value <0 ||
