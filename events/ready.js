@@ -100,6 +100,8 @@ function getSettings(){
 }
 function getBirthday(string){
     var TodayQ = Today.toISOString().slice(5,10);
+   // var query = "select * from Videos where PublishedAt like \'%" + TodayQ + "T%\' and VideoID "+(string == video)*"!"+"= \'!#event\' "
+
     if(string == "video"){
         var query = "select * from Videos where PublishedAt like \'%" + TodayQ + "T%\' and VideoID != \'!#event\' "
     }else if (string == "event"){

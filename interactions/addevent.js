@@ -4,7 +4,6 @@ const {con} = require('../GlobalVars.js');
 
 async function addevent(interaction){
     var message;
-    var videos = [];
     client.api.interactions(interaction.id, interaction.token).callback.post({data: {
         type: 5,
         data:{
