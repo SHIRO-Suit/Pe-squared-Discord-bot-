@@ -6,7 +6,7 @@ const client = new Client();
 module.exports = {client};
 
 (async () => {
-  await client.login(process.env.DISCORD_BOT_TOKEN);
+  await client.login(process.env.TOKEN);
   await client.api.applications('785217364769636362').guilds('304660884482162688').commands.post({data: {
     name: 'ping',
     description: 'ping pong!'
