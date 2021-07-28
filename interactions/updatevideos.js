@@ -16,7 +16,7 @@ async function updatevideos(interaction){
       }});
      // let adminRole = client.guilds.cache.get(interaction["guild_id"]).roles.cache.find(role => role.name === "YouTubers B&S");
     let mask = 1<<4;
-    if(!(interaction.member.permissions & mask) == 0){
+    if((interaction.member.permissions & mask) == 0){
         message = "🚫 Vous n'avez pas la permission d'effectuer cette commande";
         endMessage();
         return;
