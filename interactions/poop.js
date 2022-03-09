@@ -1,4 +1,4 @@
-const { client } = require('../src/bot.js');
+const { client } = require('../bot.js');
 module.exports={poop};
 function poop(interaction){
   var response = '💩 '+ interaction.data.options[0].value + ' 💩';

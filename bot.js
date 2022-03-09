@@ -1,8 +1,8 @@
 require('dotenv').config();
-const { Client } = require('discord.js');
+const { Client,Intents  } = require('discord.js');
 const { commands, events } = require('./commandsChecker.js');
 const json = require('./commandsFetchList.json');
-const client = new Client();
+const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
 module.exports = {client};
 
 (async () => {
@@ -11,12 +11,14 @@ module.exports = {client};
   client.ws.on('INTERACTION_CREATE', async interaction => {
     commands(interaction);
   });
+  client.on('messageCreate', msg => {
+    events('message',msg);
+  });
+  client.on('ready',()=>{
+      events('ready');
+  });
+
 })();
-client.on('message', msg => {
-  events('message',msg);
-});
-client.on('ready',()=>{
-    events('ready');
-})
+
 
 

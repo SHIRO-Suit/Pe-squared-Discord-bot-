@@ -1,13 +1,13 @@
 module.exports = {ready};
 const Discord = require('discord.js');
 const {con} = require('../GlobalVars.js');
-const {client} = require("../bot")
+const {client} = require("../bot.js")
 var Today = new Date(); //"2021-03-21T10:02:39Z" pour test
 var Timer;
 
 async function ready(){
-    
-    TryMsgErrHandle()
+    console.log("Ready OK");
+    TryMsgErrHandle();
 }
 
 function TryMsgErrHandle(){
@@ -23,11 +23,8 @@ Timer = setInterval(()=>{
 }
 }
 
-
 async function msg() {
-    
     const Settings = await getSettings();
-    console.log( Today.getHours());
     if(Settings[0].HourExec <= Today.getHours()-2)return;
 
     var later = new Date();
@@ -37,58 +34,52 @@ async function msg() {
     const Embedbase = new Discord.MessageEmbed()
           .setFooter('Le Best Bot')
           .setThumbnail('https://img.icons8.com/cotton/2x/birthday-cake.png')
-          .setColor("#" + Math.floor(Math.random() * 16777215).toString(16)) //couleur random en hex
+          .setColor("#42f551") 
           .setTimestamp();
-          var liens = "";
-         
-     getBirthday("video").then(data => {
+    var liens = "";
+    
+
+     getBirthday().then(data => {
         if(data.length== 0)return;
-        const Embed1 = new Discord.MessageEmbed(Embedbase);
-        if (data.length == 1) {
-            Embed1.setTitle("C'EST L'ANNIVERSAIRE D'UNE VIDEO AUJOURD'HUI");
-          } else {
-            Embed1.setTitle("C'EST L'ANNIVERSAIRE DE " + data.length + " VIDEOS AUJOURD'HUI");
-          }
 
+        const EmbedVideo = new Discord.MessageEmbed(Embedbase);
+        const EmbedEvent = new Discord.MessageEmbed(Embedbase);
+        var videosL = 0;
 
-        for (var video of data) {
-            Embed1.addField(video.Title, agestring(Today.getUTCFullYear() - new Date(video.PublishedAt).getUTCFullYear()));
-            liens += "https://youtu.be/" + video.VideoID + "\n";
-        }
+        for (var item of data) {
+            if(item.VideoID !== '!#event'){
+                EmbedVideo.addField(item.Title, agestring(Today.getUTCFullYear() - new Date(item.PublishedAt).getUTCFullYear())); console.log("passe par la ")
+                liens += "https://youtu.be/" + item.VideoID + "\n";
+                videosL++;
+            }else{
+                EmbedEvent.addField(item.Title, agestring(Today.getUTCFullYear() - new Date(item.PublishedAt).getUTCFullYear()));
+            }
+        } 
+        EmbedVideo.setTitle("C'EST L'ANNIVERSAIRE D" +((videosL == 1) ? "'UNE VIDEO" : ("E " + videosL + " VIDEOS")) +" AUJOURD'HUI");
+        EmbedEvent.setTitle('Aujourd\'hui');
         setTimeout(()=>{
         client.channels.fetch(Settings[0].ChannelExecID).then(channel =>{
-            channel.send(Embed1);
-            channel.send(liens);
+            if(EmbedVideo.fields.length != 0){
+            channel.send(EmbedVideo);
+            channel.send(liens);}
+            if(EmbedEvent.fields.length != 0){ channel.send(EmbedEvent) }
             deleteBDay(data);
-        })}, later.getTime() - new Date().getTime()
+        })},0// later.getTime() - new Date().getTime()
         )
     })
-    getBirthday("event").then(data2 =>{
-        if(data2.length== 0)return;
-        const Embed2 =  new Discord.MessageEmbed(Embedbase);
-        Embed2.setTitle('Aujourd\'hui')
-        for (var event of data2){
-            Embed2.addField(event.Title, agestring(Today.getUTCFullYear() - new Date(event.PublishedAt).getUTCFullYear()));
-        }
-        setTimeout(()=>{
-        client.channels.fetch(Settings[0].ChannelExecID).then(channel =>{
-            channel.send(Embed2);
-        })}, later.getTime() - new Date().getTime())
-    })
-    
-    
 }
-
-
 
 function deleteBDay(data){
     return new Promise(function (resolve, reject) {
-        for(var video of data){
-        con.query("delete from Videos where VideoID = "+video.VideoID + ";", function (err) { if (err) reject(err) });
+        for(var item of data){
+            console.log(item.VideoID);
+        if(item.VideoID == '!#event') continue;
+        con.query("delete from Videos where VideoID = \'"+item.VideoID + "\';", function (err) { if (err) reject(err) });
         }
         resolve();
     })
 }
+
 function getSettings(){
     return new Promise(function (resolve, reject) {
         con.query("select * from Settings", function (err, result) {
@@ -98,27 +89,19 @@ function getSettings(){
         })
       })
 }
-function getBirthday(string){
-    var TodayQ = Today.toISOString().slice(5,10);
-   // var query = "select * from Videos where PublishedAt like \'%" + TodayQ + "T%\' and VideoID "+(string == video)*"!"+"= \'!#event\' "
-
-    if(string == "video"){
-        var query = "select * from Videos where PublishedAt like \'%" + TodayQ + "T%\' and VideoID != \'!#event\' "
-    }else if (string == "event"){
-        var query = "select * from Videos where PublishedAt like \'%" + TodayQ + "T%\' and VideoID = \'!#event\' "
-    }
-    console.log(query);
+function getBirthday(){
+    var TodayQ = Today.toISOString().slice(5,10);   
+    var query = "select * from Videos where PublishedAt like \'%" + TodayQ + "T%\';";
     return new Promise(function (resolve, reject) {
         con.query(query, function (err, result) {
           if (err) {
             reject(err);
-          } else if (result) { console.log("result = "+result);resolve(result) }else{
+          } else if (result) { resolve(result) }else{
               resolve()
           }
         })
       })
 }
-
 
 function agestring(age) {
     var agestring = "il y a " + age + " An" + ((age == 1) ? "" : "s");
